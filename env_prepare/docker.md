@@ -141,3 +141,60 @@ cpp          1.0.0     db5b9ce46994   5 seconds ago   465MB
 ```
 成功保存!
 至此就完成了整个环境的配置,后面我再写如何使用我们创建的镜像
+
+2024.5.13
+```
+sudo docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+cpp          1.0.0     db5b9ce46994   23 hours ago    465MB
+```
+我在本地目录
+/home/sk/Desktop/code/CSP
+建立了一个CSP文件夹,以后写的cpp代码都会放在该文件夹下,因此需要将该文件夹下的文件全部链接到我们的容器当中,这样就能使用容器的环境运行代码
+
+输入以下指令
+```
+sudo docker run -dit --name csp_cpp -v /home/sk/Desktop/code/CSP:/csp cpp:1.0.0 /bin/bash
+```
+链接成功
+```
+ee2ddb915a77cdc6c316accf4739e55b0b1f0e2362a484f90ae88d5b747a6e6b
+```
+启动容器
+```
+sudo docker exec -it ee2d bash
+```
+之后就成功进入我们的终端,下面在终端来说明如何运行第一个cpp文件
+
+
+进入容器的csp文件夹
+```
+root@ee2ddb915a77:/# cd csp
+root@ee2ddb915a77:/csp# ls
+2024_3_31  README.md  env_prepare
+```
+可以发现2024_3_31文件夹(这就是放代码的文件夹)
+```
+root@ee2ddb915a77:/csp# cd 2024_3_31/
+root@ee2ddb915a77:/csp/2024_3_31# ls
+1.cpp
+```
+1.cpp是我本地建立的文件,文件代码如下
+```
+#include<iostream>
+using namespace std;
+
+int main(){
+
+    cout<<"success!";
+    return 0;
+}
+```
+输入完代码后,返回终端
+```
+root@ee2ddb915a77:/csp/2024_3_31# g++ -o test 1.cpp
+root@ee2ddb915a77:/csp/2024_3_31# ./test
+success!root@ee2ddb915a77:/csp/2024_3_31# 
+```
+代码成功编译,这里要说明一下:
+编译后的文件是保存在容器中,不是保存在本机文件中,一旦这个容器的环境出错,那么你可以直接删除该容器,然后重新启动你的原始镜像,这样你就重新拥有来一个没有任何改动的初始环境
