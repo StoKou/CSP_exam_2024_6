@@ -7,7 +7,7 @@ int compa[N][M]={0};
 
 int cp(int *a,int *b,int len){//a[any]>b[any] or a[any]<b[any] or neither
     int cout1=0,cout2=0;
-    for(int i=1;i<=len){
+    for(int i=1;i<=len;i++){
         if(a[i]>b[i]){
             cout1++;
         }
@@ -44,6 +44,7 @@ int main(){
             for(int j=1;j<=m;j++){
                 maxcap[j]=nowcap[j];
             }
+            res[maxindex]=i;
             maxindex=i;//change max
         }
     }
